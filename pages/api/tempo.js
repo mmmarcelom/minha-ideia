@@ -1,16 +1,17 @@
 async function tempo(request, response){
     const dynamicDate = new Date();
-    const apiSecret = process.env.CONVERTKIT_API_SECRET
+    console.log(request.query['estado'])
 
-    const estadosResponse = await fetch("https://servicodados.ibge.gov.br/api/v1/localidades/estados/SP/municipios")
+    let url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${request.query['estado']}/municipios`
+
+    const estadosResponse = await fetch(url)
     const estadosResponseJson = await estadosResponse.json()
     const quantidade = estadosResponseJson.length
     
 
     response.json({
         date: dynamicDate.toTimeString(),
-        quantidade: quantidade,
-        teste: apiSecret
+        quantidade: quantidade
         
     });
 }
